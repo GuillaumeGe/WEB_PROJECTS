@@ -1,2 +1,2 @@
 # WEB_PROJECTS
-repo for all my public personnal projects
+repo for some of my personnal web projects
