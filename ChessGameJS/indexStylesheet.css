@@ -1,0 +1,47 @@
+body{
+	text-align: center;
+	background: #363636;
+}
+h1{
+	color: #E5FCC2;
+}
+
+/*button{
+	font-size: 1.5vw;
+	margin: 1vw;
+	border-radius: 0.5vw;
+	font-family: Verdana;
+	background: #474747;
+	color: white;
+}*/
+
+.Panel {
+	display: inline-block;
+	min-width: 20vw;
+	min-height: 10vw;
+	background: #A8A7A7;
+	border-radius: 1vw;
+	padding: 1vw;
+	margin: 2vw;
+	cursor:pointer;
+	border:solid #E5FCC2 0.2vw;
+}
+
+.Panel:hover {
+	box-shadow: 1vw 1vw 1vw #202020;
+	transform: scale(1.05,1.05);
+}
+
+.Panel .Title{
+	font-size: 1.5vw;
+	color: #902000;
+	
+	margin: 0.5vw;
+	margin-bottom: 2vw;
+}
+
+.Panel label{
+	font-size: 1.5vw;
+	color: #902000;
+	font-family: Verdana;
+}

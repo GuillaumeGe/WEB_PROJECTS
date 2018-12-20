@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang='en'>
+<head>
+	<Title>Chess Game</Title>
+	<link rel = 'stylesheet' type = 'text/css' href='./indexStylesheet.css'></link>
+	<script src='./jquery-3.2.1.min.js'></script>
+	<script src='./battleMatcher.js'></script>
+</head>
+<body>
+	<h1 id='title'>Chess Game Match Maker !</h1>
+	<div id='playerPanel' class='Panel'>
+		<div class='Title'>Your infos</div>
+		<label>Name: </label><input type="text" height='20' name="playerName"/><br>
+		<label>ID: </label><span id="generatedId"></span><br>
+		<!-- <input type="button" width="110" name="acceptButton"/> -->
+		<button id="searchMatchBtn">Play !</button>
+	</div><br>
+	<div class='Panel'>
+		<div class='Title'>Challenge a friend !</div>
+		<input type="text" height='20' name="friendId" width="110" placeholder="Insert your friend's ID here" /><br>
+		<button id="requestMatchBtn">Send request</button>
+	</div>
+	<br>
+</body>
+</html>

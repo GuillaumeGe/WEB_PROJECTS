@@ -1,6 +1,6 @@
 let colNumber = 8;
 let rowNumber = 8;
-let playerTime = 60; //60s reflexion 
+let playerTime = 15; //60s reflexion 
 var currentCell = null;
 // var pairColor = "#006090";
 let pairColor = "#A8A7A7";
@@ -109,8 +109,9 @@ $(document).ready(function ()
 						$("#"+posD1).attr("data-state","target");
 						$("#"+posD1).css("background",targetColor);
 					}
-					else
+					else {
 						locked =true;
+					}
 
 					//if cell D2 is free
 					if(posD2<rowNumber*colNumber && posD2 > 0)
@@ -141,16 +142,17 @@ $(document).ready(function ()
 					break;
 				case 'tower':
 					// beta version
-					// var dir = [[1,0],[0,1],[-1,0],[0,-1]];
+					//TODO: refactor this method --> redundancy
+					// let dir = [[1,0],[0,1],[-1,0],[0,-1]];
 					// for(var n = 0;n < 4;n++)
 					// {
 					// 	console.log("n = " + n);
 					// 	var i = ((n%2 == 0) ? posX : posY) + dir[n][n%2];
-					// 	var max_min = Math.abs(dir[n][(n-(n%2))/2]*((n%2 == 0) ? colNumber : rowNumber)) + !Math.abs(dir[n][(n-(n%2))/2])*dir[n][n%2];
+					// 	let max_min = Math.abs(dir[n][(n-(n%2))/2]*((n%2 == 0) ? colNumber : rowNumber)) + !Math.abs(dir[n][(n-(n%2))/2])*dir[n][n%2];
 					// 	if(i > 0 && i < ((n%2 == 0) ? colNumber : rowNumber))
 					// 		while(i != max_min)
 					// 		{
-					// 			var targetPos = (((i * (n%2)) + (posY * !(n%2))) * colNumber + ((i * !(n%2)) + (posX * (n%2))));
+					// 			let targetPos = (((i * (n%2)) + (posY * !(n%2))) * colNumber + ((i * !(n%2)) + (posX * (n%2))));
 					// 			console.log("id: "+targetPos);
 					// 			if(targeting(targetPos,getElementColor($("#"+targetPos)),
 					// 						objectColor))
@@ -161,35 +163,39 @@ $(document).ready(function ()
 
 					for(var i = posY+1;i<colNumber;i++)
 					{
-						var targetPos = (i * colNumber + posX);
+						let targetPos = (i * colNumber + posX);
 						if(targeting(targetPos,
 							getElementColor($("#"+targetPos)),
-							objectColor))
+							objectColor)) {
 							break;
+						}	
 					}
 					for(var i = posY-1;i>=0;i--)
 					{
-						var targetPos = (i * colNumber + posX);
+						let targetPos = (i * colNumber + posX);
 						if(targeting(targetPos,
 							getElementColor($("#"+targetPos)),
-							objectColor))
+							objectColor)) {
 							break;
+						}	
 					}
 					for(var i = posX+1;i<rowNumber;i++)
 					{
-						var targetPos = (posY * colNumber + i);
+						let targetPos = (posY * colNumber + i);
 						if(targeting(targetPos,
 							getElementColor($("#"+targetPos)),
-							objectColor))
+							objectColor)) {
 							break;
+						}	
 					}
 					for(var i = posX-1;i>=0;i--)
 					{
-						var targetPos = (posY * colNumber + i);
+						let targetPos = (posY * colNumber + i);
 						if(targeting(targetPos,
 							getElementColor($("#"+targetPos)),
-							objectColor))
+							objectColor)) {
 							break;
+						}	
 					}
 					break;
 				case 'knight':
@@ -200,7 +206,7 @@ $(document).ready(function ()
 					for(var i = 0;i<8;i++)
 					{
 						//i * colNumber + j
-						var targetPos = killPos[i][1] * colNumber + killPos[i][0];
+						let targetPos = killPos[i][1] * colNumber + killPos[i][0];
 						if(killPos[i][1] >= 0 && 
 							killPos[i][1] < rowNumber && 
 							killPos[i][0] >= 0 && 
@@ -218,7 +224,7 @@ $(document).ready(function ()
 							(posY+(dir[n][1]*i)) >= 0 &&
 							(posX+(dir[n][0]*i)) >= 0)
 						{
-							var targetPos = ((posY+(dir[n][1]*i)) * colNumber + (posX+(dir[n][0]*i)));
+							let targetPos = ((posY+(dir[n][1]*i)) * colNumber + (posX+(dir[n][0]*i)));
 							if(targeting(targetPos,
 								getElementColor($("#"+targetPos)),
 								objectColor))
@@ -235,7 +241,7 @@ $(document).ready(function ()
 					for(var i = 0;i<8;i++)
 					{
 						//i * colNumber + j
-						var targetPos = killPos[i][1] * colNumber + killPos[i][0];
+						let targetPos = killPos[i][1] * colNumber + killPos[i][0];
 						if(targetPos>=0 && targetPos < colNumber*rowNumber)
 							targeting(targetPos,getElementColor($("#"+targetPos)),objectColor);
 					}
@@ -251,7 +257,7 @@ $(document).ready(function ()
 							(posY+(dir[n][1]*i)) >= 0 &&
 							(posX+(dir[n][0]*i)) >= 0)
 						{
-							var targetPos = ((posY+(dir[n][1]*i)) * colNumber + (posX+(dir[n][0]*i)));
+							let targetPos = ((posY+(dir[n][1]*i)) * colNumber + (posX+(dir[n][0]*i)));
 							if(targeting(targetPos,
 								getElementColor($("#"+targetPos)),
 								objectColor))
@@ -262,7 +268,7 @@ $(document).ready(function ()
 				//cartesian
 					for(var i = posY+1;i<colNumber;i++)
 					{
-						var targetPos = (i * colNumber + posX);
+						let targetPos = (i * colNumber + posX);
 						if(targeting(targetPos,
 							getElementColor($("#"+targetPos)),
 							objectColor))
@@ -270,7 +276,7 @@ $(document).ready(function ()
 					}
 					for(var i = posY-1;i>=0;i--)
 					{
-						var targetPos = (i * colNumber + posX);
+						let targetPos = (i * colNumber + posX);
 						if(targeting(targetPos,
 							getElementColor($("#"+targetPos)),
 							objectColor))
@@ -278,7 +284,7 @@ $(document).ready(function ()
 					}
 					for(var i = posX+1;i<rowNumber;i++)
 					{
-						var targetPos = (posY * colNumber + i);
+						let targetPos = (posY * colNumber + i);
 						if(targeting(targetPos,
 							getElementColor($("#"+targetPos)),
 							objectColor))
@@ -286,7 +292,7 @@ $(document).ready(function ()
 					}
 					for(var i = posX-1;i>=0;i--)
 					{
-						var targetPos = (posY * colNumber + i);
+						let targetPos = (posY * colNumber + i);
 						if(targeting(targetPos,
 							getElementColor($("#"+targetPos)),
 							objectColor))
@@ -428,7 +434,7 @@ function startTimer()
 function resetTimer()
 {
 	clearInterval(timeElapsingLoop);
-	timeLeft = 15;
+	timeLeft = playerTime;
 	updateTimer();
 }
 
@@ -436,7 +442,7 @@ function decreaseTimer()
 {
 	timeLeft -= 0.1;
 	updateTimer();
-	if(timeLeft == 0) {
+	if(timeLeft <= 0) {
 		alert("Time elapsed !");
 		//skip turn
 		resetTimer();
@@ -572,7 +578,7 @@ function connect()
 				}
 				else
 				{
-
+					
 				}
 				
 			}
