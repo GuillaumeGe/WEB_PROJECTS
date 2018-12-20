@@ -1,0 +1,85 @@
+body{
+	text-align: center;
+	background: #363636;
+}
+h1{
+	color: #E5FCC2;
+}
+#logPanel{
+	background: #1f1f1f; 
+	display: inline-block; 
+	width: 250px; 
+	/*visibility: hidden;*/
+	vertical-align: top;
+	border:solid lightblue 3px;
+	border-radius: 10px;
+	margin: 2%;
+	text-align: center;
+	box-shadow: 5px 5px 5px grey;
+	cursor:pointer;
+}
+#connectionPanel{
+	background: #1f1f1f; 
+	display: inline-block; 
+	width: 250px; 
+	/*visibility: hidden;*/
+	vertical-align: top;
+	border:solid lightgreen 3px;
+	border-radius: 10px;
+	margin: 2%;
+	text-align: center;
+	box-shadow: 5px 5px 5px grey;
+	cursor:pointer;
+}
+#connectionPanel:hover{
+	transform: scale(1.1,1.1);
+	box-shadow: 10px 10px 10px grey;
+}
+#connectionPanel input{
+	width: 90%;
+	margin: 5px;
+	height: 20px;
+	border-radius: 10px;
+	border-color: white;
+	text-align: center;
+
+}
+#connectionPanel button{
+	margin: 5px;
+}
+#grid {
+	background: black;
+	margin: 2%;
+	/*visibility: hidden;*/
+	display: inline-block;
+	padding: 0.2vw;
+	border:solid #E5FCC2 3px;
+	border-radius: 10px;
+	/*cursor: none;*/
+}
+.case {
+	/*background: #dddddd;*/
+	width: 4vw;
+	height: 4vw;
+	margin: 0.1vw;
+	margin-bottom: 0vw;
+	display: inline-block;
+	border-radius: 20%;
+	/*cursor: pointer;*/
+}
+
+.timer {
+	width: 24vw;
+	height: 2vw;
+	background: #000000;
+	border: solid 2px white;
+	display: inline-block;
+	border-radius: 10px;
+}
+
+.timer #value {
+	width: 24vw;
+	height: 2vw;
+	background: linear-gradient(to bottom, blue , cyan);
+	border-radius: 10px;
+}
