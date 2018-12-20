@@ -3,15 +3,24 @@ let rowNumber = 8;
 let playerTime = 60; //60s reflexion 
 var currentCell = null;
 // var pairColor = "#006090";
-var pairColor = "#A8A7A7";
-var impairColor = "#474747";
-var selectColor = "#9999FF";
-var focusColor = "#45ADA8";
-var targetColor = "#99B898";
-var killColor = "#E84A5F";
+let pairColor = "#A8A7A7";
+let impairColor = "#474747";
+let selectColor = "#9999FF";
+let focusColor = "#45ADA8";
+let targetColor = "#99B898";
+let killColor = "#E84A5F";
 var timeLeft = playerTime; 
 var timeElapsingLoop;	
 
+window.addEventListener("resize", resizeEvent);
+
+
+function resizeEvent()
+{
+	console.log("Window resized");
+	//TODO find alternative
+	location.reload();
+}
 
 $(document).ready(function ()
 {

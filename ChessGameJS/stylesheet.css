@@ -54,17 +54,17 @@ h1{
 	display: inline-block;
 	padding: 0.2vw;
 	border:solid #E5FCC2 3px;
-	border-radius: 10px;
+	border-radius: 1vw;
 	/*cursor: none;*/
 }
 .case {
 	/*background: #dddddd;*/
-	width: 4vw;
-	height: 4vw;
+	width: 6vw;
+	height: 6vw;
 	margin: 0.1vw;
 	margin-bottom: 0vw;
 	display: inline-block;
-	border-radius: 20%;
+	border-radius: 0.5vw;
 	/*cursor: pointer;*/
 }
 
@@ -72,14 +72,19 @@ h1{
 	width: 24vw;
 	height: 2vw;
 	background: #000000;
-	border: solid 2px white;
+	border: solid 0.2vw #E5FCC2;
 	display: inline-block;
-	border-radius: 10px;
+	border-radius: 1vw;
+}
+
+.timer:hover {
+	transition-timing-function: ease-out;
+	transform: scale(1.1,1.1);
 }
 
 .timer #value {
 	width: 24vw;
 	height: 2vw;
 	background: linear-gradient(to bottom, blue , cyan);
-	border-radius: 10px;
+	border-radius: 0.7vw;
 }
