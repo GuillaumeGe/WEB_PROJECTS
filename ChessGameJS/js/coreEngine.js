@@ -326,7 +326,7 @@ $(document).ready(function ()
 			$(this).attr("src",prev);
 			//player has played
 			resetTimer();
-			console.log(objectColor + " has played");
+			logInfo(" has played !\n" + element + " at " );
 			
 			//for each cell with state target --> init color & state
 			for(var i=0;i<rowNumber;i++)
