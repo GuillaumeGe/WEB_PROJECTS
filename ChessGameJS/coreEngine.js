@@ -1,10 +1,10 @@
 let colNumber = 8;
 let rowNumber = 8;
-let playerTime = 15; //60s reflexion 
+let playerTime = 60; //60s reflexion 
 var currentCell = null;
-// var pairColor = "#006090";
-let pairColor = "#A8A7A7";
-let impairColor = "#474747";
+// var evenCellColor = "#006090";
+let evenCellColor = "#A8A7A7";
+let oddCellColor = "#474747";
 let selectColor = "#9999FF";
 let focusColor = "#45ADA8";
 let targetColor = "#99B898";
@@ -25,12 +25,14 @@ function resizeEvent()
 $(document).ready(function ()
 {
 	$("#grid").html(createGrid(colNumber,rowNumber));
-	$(".timer").css("width",$("#grid").css("width"));
-	$(".timer #value").css("width",$("#grid").css("width"));
+	$(".Timer").css("width",$("#grid").css("width"));
+	$(".Timer #value").css("width",$("#grid").css("width"));
+	$(".Console #infoLogger").css("height",$("#grid").css("height"));
 	startTimer();
+	logInfo("Game started !");
 	
 	//$("#0").attr('src', 'data:image/gif;base(rowNumber * colNumber),R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==');
-	$(".case").on('click', function()
+	$(".Cell").on('click', function()
 	{
 		console.log($(this).attr('id'));
 		if($(this).attr("src") != "./res/noneColor.png" && $(this).attr("data-state") != "target")
@@ -38,7 +40,7 @@ $(document).ready(function ()
 			if(currentCell != null)
 			if($(this).attr('id') != currentCell.attr('id'))
 			{
-				initColorCase(currentCell);
+				initColorCell(currentCell);
 				currentCell.attr("data-state","");
 			}
 			currentCell = $(this);
@@ -64,7 +66,7 @@ $(document).ready(function ()
 				{
 					if((i * colNumber + j)!=objectId)
 					{
-						initColorCase($("#"+(i * colNumber + j)));
+						initColorCell($("#"+(i * colNumber + j)));
 						$("#"+(i * colNumber + j)).attr("data-state","");
 					}
 					else
@@ -303,8 +305,7 @@ $(document).ready(function ()
 					break;
 			}
 		}
-		else if($(this).attr("data-state") == "target")
-		{
+		else if($(this).attr("data-state") == "target") {
 			var target = getElementType($(this));
 			var element = getElementType(currentCell);
 
@@ -324,6 +325,7 @@ $(document).ready(function ()
 			currentCell.attr('src', './res/noneColor.png');
 			$(this).attr("src",prev);
 			//player has played
+			resetTimer();
 			console.log(objectColor + " has played");
 			
 			//for each cell with state target --> init color & state
@@ -331,34 +333,34 @@ $(document).ready(function ()
 			{
 				for(var j = 0;j<colNumber;j++)
 				{
-					initColorCase($("#"+(i * colNumber + j)));
+					initColorCell($("#"+(i * colNumber + j)));
 					$("#"+(i * colNumber + j)).attr("data-state","");
 				}
 			}
 		}
-		else if($(this).attr("data-state") == "")
+		else if ($(this).attr("data-state") == "")
 		{
 			for(var i=0;i<rowNumber;i++)
 			{
 				for(var j = 0;j<colNumber;j++)
 				{
-					initColorCase($("#"+(i * colNumber + j)));
+					initColorCell($("#"+(i * colNumber + j)));
 					$("#"+(i * colNumber + j)).attr("data-state","");
 				}
 			}
 		}
 	});
-	$(".case").mouseover(function()
+	$(".Cell").mouseover(function()
 	{
 		//currentCell = $(this);
 		if($(this).attr('data-state') != "focus" && $(this).attr('data-state') != "target")
 			$(this).css('background',selectColor);
 	});
-	$(".case").mouseleave(function()
+	$(".Cell").mouseleave(function()
 	{
 		if($(this).attr('data-state') != "focus" && $(this).attr('data-state') != "target")
 		{
-			initColorCase($(this));
+			initColorCell($(this));
 		}
 	});
 });
@@ -391,39 +393,25 @@ function getActualGrid()
 	var grid = "";
 	for(var i = 0;i<colNumber*rowNumber;i++)
 	{
-		//sol 1
-		//textStruct
-		/*
-			id-Object-Color;
-
-			ex:
-			25-pawn-Black;
-			26-pawn-White;
-		*/
-		//grid += i + "-" + getElementType($("#"+i)) + "-" + getElementColor($("#"+i)) + ";";
-		//sol 2
-		grid += "<img class='case' data-state='" + $("#"+i).attr("data-state") + "' data-pawn='" + $("#"+i).attr("data-pawn") + "' src='" + $("#"+i).attr("src") + "' id='" + i + "'/>";
-		if(i%(colNumber-1)==0)
+		grid += "<img class='Cell' data-state='" + $("#"+i).attr("data-state") + "' data-pawn='" + $("#"+i).attr("data-pawn") + "' src='" + $("#"+i).attr("src") + "' id='" + i + "'/>";
+		if(i%(colNumber-1)==0) {
 			grid+="<br>";
+		}
 	}
 	return grid;
 }
 
 function setActualGrid(newGrid)
 {
-	// for(var i = 0;i<colNumber*rowNumber;i++)
-	// {
-	// 	// $("#"+i)).attr("src")
-	// }
 	$('#grid').html(newGrid);
 }
 
 function updateTimer()
 {
-	let orientation = parseInt($(".timer").css("height")) > parseInt($(".timer").css("width")) ? "height" : "width";
-	let step = parseFloat($(".timer").css(orientation))/playerTime;
-	let guiVal = parseFloat($(".timer").css(orientation)) + ((timeLeft - playerTime) * step);
-	$(".timer #value").css(orientation, guiVal);
+	let orientation = parseInt($(".Timer").css("height")) > parseInt($(".Timer").css("width")) ? "height" : "width";
+	let step = parseFloat($(".Timer").css(orientation))/playerTime;
+	let guiVal = parseFloat($(".Timer").css(orientation)) + ((timeLeft - playerTime) * step);
+	$(".Timer #value").css(orientation, guiVal);
 }
 
 function startTimer()
@@ -442,11 +430,23 @@ function decreaseTimer()
 {
 	timeLeft -= 0.1;
 	updateTimer();
+	
 	if(timeLeft <= 0) {
 		alert("Time elapsed !");
+		logInfo("Your time has elapsed, your turn has been skipped");
 		//skip turn
 		resetTimer();
 	}
+}
+
+function logInfo(msg)
+{
+	var text = $(".Console #infoLogger").html();
+	let d = new Date();
+	text += d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds() + " : " + String(msg) + "\n";
+	$(".Console #infoLogger").html(text);
+	console.clear();
+	console.log(text);
 }
 
 function getElementColor(element)
@@ -465,14 +465,14 @@ function getElementType(element)
 	return element.attr("src").substr(6,element.attr("src").length-4-5-6);
 }
 
-function initColorCase(element)
+function initColorCell(element)
 {
 	var x = (element.attr('id')%colNumber);
 	var y = (element.attr('id')-x)/rowNumber;
 	if(element.attr('id') % 2 == y%2)
-		element.css('background',pairColor);
+		element.css('background',evenCellColor);
 	else
-		element.css('background',impairColor);
+		element.css('background',oddCellColor);
 }
 
 function createGrid(nCol,nRow)
@@ -484,57 +484,57 @@ function createGrid(nCol,nRow)
 	{
 		for(var j = 0;j<nCol;j++)
 		{
-			var caseId = (i * nCol + j);
-			html += "<img class='case' data-state='' ";
+			var CellId = (i * nCol + j);
+			html += "<img class='Cell' data-state='' ";
 			
-			if(caseId >= 0 && caseId < nPiece)
+			if(CellId >= 0 && CellId < nPiece)
 			{
 				//black pieces
 				color = "Black";
-				if(caseId >= nPiece/2 && caseId <nPiece)
+				if(CellId >= nPiece/2 && CellId <nPiece)
 				{
 					html+="src='./res/pawn"+color+".png' data-pawn='true' ";
 				}
-				else if(caseId == 0 || caseId == 7)
+				else if(CellId == 0 || CellId == 7)
 					html+="src='./res/tower"+color+".png' ";
-				else if(caseId == 1 || caseId == 6)
+				else if(CellId == 1 || CellId == 6)
 					html+="src='./res/knight"+color+".png' ";
-				else if(caseId == 2 || caseId == 5)
+				else if(CellId == 2 || CellId == 5)
 					html+="src='./res/bishop"+color+".png' ";
-				else if(caseId == 3)
+				else if(CellId == 3)
 					html+="src='./res/queen"+color+".png' ";
-				else if(caseId == 4)
+				else if(CellId == 4)
 					html+="src='./res/king"+color+".png' ";
 			}
-			else if(caseId >= (rowNumber * colNumber) - nPiece && caseId < (rowNumber * colNumber))
+			else if(CellId >= (rowNumber * colNumber) - nPiece && CellId < (rowNumber * colNumber))
 			{
 				//white pieces
 				color = "White";
-				if(caseId >= (rowNumber * colNumber) - nPiece && caseId < (rowNumber * colNumber) - nPiece/2)
+				if(CellId >= (rowNumber * colNumber) - nPiece && CellId < (rowNumber * colNumber) - nPiece/2)
 				{
 					html+="src='./res/pawn"+color+".png' data-pawn='true' ";
 				}
-				else if(caseId == 56 || caseId == 63)
+				else if(CellId == 56 || CellId == 63)
 					html+="src='./res/tower"+color+".png' ";
-				else if(caseId == 57 || caseId == 62)
+				else if(CellId == 57 || CellId == 62)
 					html+="src='./res/knight"+color+".png' ";
-				else if(caseId == 58 || caseId == 61)
+				else if(CellId == 58 || CellId == 61)
 					html+="src='./res/bishop"+color+".png' ";
-				else if(caseId == 59)
+				else if(CellId == 59)
 					html+="src='./res/queen"+color+".png' ";
-				else if(caseId == 60)
+				else if(CellId == 60)
 					html+="src='./res/king"+color+".png' ";
 			}
 			else
 			{
 				html+="src='./res/noneColor.png' ";
 			}
-			if(caseId % 2 == i%2)
-				html+="style='background:"+pairColor+";' ";
+			if(CellId % 2 == i%2)
+				html+="style='background:"+evenCellColor+";' ";
 			else
-				html+="style='background:"+impairColor+";' ";
+				html+="style='background:"+oddCellColor+";' ";
 
-		  	html+="id='" + caseId + "'/>";
+		  	html+="id='" + CellId + "'/>";
 		}
 		html += "<br>";
 	}
@@ -554,6 +554,7 @@ function askGameUpdate(actualGrid,element,target)
 			alert("ok");
 			alert(rsp[0]);
 			$('#logPanel').html(rsp);
+			startTimer();
 		}
 	});
 }
